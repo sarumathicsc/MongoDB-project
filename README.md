@@ -1,9 +1,61 @@
-# InvenTrack — E-Commerce Inventory & Order Management System
+# 🛒 InvenTrack – E-Commerce Inventory & Order Management System
 
-A second full-stack CRUD project (companion to the Student Management System) built with **HTML5, CSS3, JavaScript, Core Java, and MongoDB**. It reuses the same architecture and patterns you already know, while adding: multi-collection relationships, stock/business logic, and a `$lookup`-based aggregation report.
+A full-stack inventory and order management application built using **Core Java, MongoDB, HTML, CSS, and JavaScript**. The system enables users to manage products, process customer orders, and automatically update inventory in real time through a RESTful backend.
+
+This project was developed to gain hands-on experience with backend development, MongoDB document databases, REST API design, and frontend-backend integration. It also demonstrates MongoDB aggregation using **$lookup** to generate sales reports and business insights.
 
 ---
 
+## ✨ Features
+
+- 📦 Product inventory management (Create, Read, Update, Delete)
+- 🛒 Customer order management
+- 🔄 Automatic inventory updates when orders are placed
+- ↩️ Stock restoration when an order is cancelled
+- 📊 Sales reports using MongoDB Aggregation (`$lookup`, `$group`, `$unwind`)
+- 🔍 Search and filter products and orders
+- 🌐 RESTful APIs built with Java HttpServer
+- 💻 Responsive frontend using HTML, CSS, and JavaScript
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
+
+### Backend
+- Core Java
+- Java HttpServer
+
+### Database
+- MongoDB
+- MongoDB Java Driver
+
+### Tools
+- MongoDB Compass
+- VS Code
+- Git & GitHub
+- Postman
+
+---
+
+## 🎯 Learning Outcomes
+
+Through this project, I gained practical experience in:
+
+- Designing and developing RESTful APIs using Core Java
+- Integrating Java applications with MongoDB
+- Performing CRUD operations on multiple collections
+- Implementing inventory management and business validation logic
+- Using MongoDB Aggregation Framework (`$lookup`, `$group`, `$unwind`)
+- Building a modular backend architecture
+- Connecting frontend and backend components using HTTP requests
+- Managing projects with Git and GitHub
+
+---
 ## 📁 Folder Structure
 
 ```
@@ -155,3 +207,31 @@ Same tips as Project 1's README apply — check `services.msc` for MongoDB, ensu
 ---
 
 See `docs/Documentation.md` for the full report: a focused `$lookup`/`$unwind` MongoDB tutorial, architecture diagrams, academic documentation, and 50+ viva questions.
+---
+
+## 🚀 Future Improvements
+
+- User authentication and role-based access
+- Product image upload
+- Sales analytics dashboard
+- Barcode and QR code support
+- Email notifications
+- Docker deployment
+- Cloud database support
+
+---
+
+## 👩‍💻 Author
+
+**Sarumathi H**
+
+- 🎓 B.Tech – Artificial Intelligence & Data Science
+- 💼 Aspiring Software Engineer | AI & Cloud Enthusiast
+
+**GitHub:** https://github.com/sarumathicsc
+
+**LinkedIn:** https://www.linkedin.com/in/sarumathi0710
+
+---
+
+⭐ If you found this project useful, consider giving it a star.
