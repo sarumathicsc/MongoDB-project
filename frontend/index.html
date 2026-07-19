@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory & Order Management | Home</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ============ NAVIGATION BAR ============ -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><i class="fa-solid fa-boxes-stacked"></i> InvenTrack</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="orders.html">Orders</a></li>
+        <li><a href="orders.html#report-section">Sales Reports</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO SECTION ============ -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>E-Commerce Inventory &amp; Order Management</h1>
+      <p>Track products, manage stock levels, process customer orders, and view real-time sales analytics — built with HTML, CSS, JavaScript, Core Java and MongoDB.</p>
+      <div class="hero-buttons">
+        <a href="products.html" class="btn btn-primary btn-large">
+          <i class="fa-solid fa-box"></i> Manage Products
+        </a>
+        <a href="orders.html" class="btn btn-outline btn-large">
+          <i class="fa-solid fa-cart-shopping"></i> View Orders
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ FEATURES SECTION ============ -->
+  <section class="features">
+    <h2 class="section-title">What You Can Do</h2>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <i class="fa-solid fa-box-open feature-icon"></i>
+        <h3>Product Inventory</h3>
+        <p>Add, update, and track products with live stock quantities and reorder alerts.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-triangle-exclamation feature-icon"></i>
+        <h3>Low Stock Alerts</h3>
+        <p>Instantly see which products have fallen below their reorder level.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-cart-plus feature-icon"></i>
+        <h3>Order Processing</h3>
+        <p>Create multi-item customer orders that automatically deduct stock in real time.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-truck feature-icon"></i>
+        <h3>Order Status Tracking</h3>
+        <p>Move orders through Pending → Shipped → Delivered, or cancel and auto-restore stock.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-chart-pie feature-icon"></i>
+        <h3>Sales by Category</h3>
+        <p>A joined report across Orders and Products using MongoDB's $lookup aggregation.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-ranking-star feature-icon"></i>
+        <h3>Top Selling Products</h3>
+        <p>See which products generate the most revenue and units sold.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ TECH STACK SECTION ============ -->
+  <section class="about">
+    <h2 class="section-title">Technology Stack</h2>
+    <div class="tech-stack">
+      <div class="tech-item"><i class="fa-brands fa-html5"></i><span>HTML5</span></div>
+      <div class="tech-item"><i class="fa-brands fa-css3-alt"></i><span>CSS3</span></div>
+      <div class="tech-item"><i class="fa-brands fa-js"></i><span>JavaScript</span></div>
+      <div class="tech-item"><i class="fa-brands fa-java"></i><span>Core Java</span></div>
+      <div class="tech-item"><i class="fa-solid fa-leaf"></i><span>MongoDB</span></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2026 InvenTrack — E-Commerce Inventory &amp; Order Management System</p>
+  </footer>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

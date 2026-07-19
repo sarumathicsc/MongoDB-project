@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory & Order Management | Orders</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ============ NAVIGATION BAR ============ -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><i class="fa-solid fa-boxes-stacked"></i> InvenTrack</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="orders.html" class="active">Orders</a></li>
+        <li><a href="#report-section">Sales Reports</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dashboard-container">
+
+    <h1 class="page-title"><i class="fa-solid fa-cart-shopping"></i> Orders &amp; Sales</h1>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- ============ STAT CARDS (filled via /api/orders/stats) ============ -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <i class="fa-solid fa-receipt stat-icon"></i>
+        <div><h3 id="statTotalOrders">0</h3><p>Total Orders</p></div>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-indian-rupee-sign stat-icon"></i>
+        <div><h3 id="statTotalRevenue">₹0</h3><p>Total Revenue</p></div>
+      </div>
+      <div class="stat-card stat-warning">
+        <i class="fa-solid fa-hourglass-half stat-icon"></i>
+        <div><h3 id="statPendingOrders">0</h3><p>Pending Orders</p></div>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-chart-line stat-icon"></i>
+        <div><h3 id="statAvgOrderValue">₹0</h3><p>Average Order Value</p></div>
+      </div>
+    </section>
+
+    <!-- ============ CREATE ORDER FORM ============ -->
+    <section class="form-section" id="add-section">
+      <h2 class="section-heading"><i class="fa-solid fa-cart-plus"></i> Create New Order</h2>
+
+      <form id="orderForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="customerName">Customer Name *</label>
+            <input type="text" id="customerName" placeholder="e.g. Arjun Kumar" required />
+            <span class="error-text" id="err-customerName"></span>
+          </div>
+          <div class="form-group">
+            <label for="customerEmail">Customer Email *</label>
+            <input type="email" id="customerEmail" placeholder="e.g. arjun@example.com" required />
+            <span class="error-text" id="err-customerEmail"></span>
+          </div>
+          <div class="form-group">
+            <label for="customerPhone">Customer Phone *</label>
+            <input type="text" id="customerPhone" placeholder="e.g. 9876543210" required />
+            <span class="error-text" id="err-customerPhone"></span>
+          </div>
+          <div class="form-group full-width">
+            <label for="shippingAddress">Shipping Address *</label>
+            <input type="text" id="shippingAddress" placeholder="e.g. Chennai, Tamil Nadu" required />
+            <span class="error-text" id="err-shippingAddress"></span>
+          </div>
+        </div>
+
+        <h3 class="sub-heading">Order Items</h3>
+        <span class="error-text" id="err-items"></span>
+
+        <!-- Dynamically generated rows go here, one per product added to the order -->
+        <div id="orderItemsContainer"></div>
+
+        <button type="button" class="btn btn-secondary btn-small" id="addItemBtn">
+          <i class="fa-solid fa-plus"></i> Add Item
+        </button>
+
+        <div class="order-total-box">
+          <span>Order Total:</span>
+          <strong id="orderTotalDisplay">₹0.00</strong>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitOrderBtn">
+            <i class="fa-solid fa-check"></i> Place Order
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============ SEARCH / FILTER BAR ============ -->
+    <section class="search-section" id="table-section">
+      <h2 class="section-heading"><i class="fa-solid fa-magnifying-glass"></i> Search &amp; Filter Orders</h2>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search by Order ID or customer name..." />
+        <select id="filterStatus">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+        <button class="btn btn-primary" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+        <button class="btn btn-secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+      </div>
+    </section>
+
+    <!-- ============ ORDERS TABLE ============ -->
+    <section class="table-wrapper">
+      <table class="student-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="orderTableBody">
+          <tr><td colspan="7" class="loading-row">Loading orders...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============ SALES REPORTS (Aggregation with $lookup) ============ -->
+    <section class="report-section" id="report-section">
+      <h2 class="section-heading"><i class="fa-solid fa-chart-pie"></i> Sales by Category</h2>
+      <p class="report-subtitle">Generated using MongoDB's <code>$unwind</code> + <code>$lookup</code> + <code>$group</code> — joining Orders with Products by category.</p>
+      <div class="table-wrapper">
+        <table class="student-table">
+          <thead>
+            <tr><th>Category</th><th>Units Sold</th><th>Revenue</th></tr>
+          </thead>
+          <tbody id="categoryReportBody">
+            <tr><td colspan="3" class="loading-row">Loading report...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="section-heading" style="margin-top:32px;"><i class="fa-solid fa-ranking-star"></i> Top Selling Products</h2>
+      <div class="table-wrapper">
+        <table class="student-table">
+          <thead>
+            <tr><th>Rank</th><th>Product</th><th>Units Sold</th><th>Revenue</th></tr>
+          </thead>
+          <tbody id="topProductsReportBody">
+            <tr><td colspan="4" class="loading-row">Loading report...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORDER DETAILS MODAL ============ -->
+  <div class="modal-overlay" id="viewOrderModal">
+    <div class="modal-box modal-box-large">
+      <h3><i class="fa-solid fa-receipt"></i> Order Details</h3>
+      <div id="orderDetailsContent"></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="closeViewModalBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DELETE CONFIRMATION MODAL ============ -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+      <i class="fa-solid fa-triangle-exclamation modal-icon"></i>
+      <h3>Delete Order?</h3>
+      <p>This action cannot be undone. Are you sure you want to delete order <strong id="deleteOrderId"></strong>?</p>
+      <div class="modal-actions">
+        <button class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+        <button class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2026 InvenTrack — E-Commerce Inventory &amp; Order Management System</p>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/orders.js"></script>
+</body>
+</html>

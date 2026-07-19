@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory & Order Management | Products</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ============ NAVIGATION BAR ============ -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><i class="fa-solid fa-boxes-stacked"></i> InvenTrack</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html" class="active">Products</a></li>
+        <li><a href="orders.html">Orders</a></li>
+        <li><a href="orders.html#report-section">Sales Reports</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dashboard-container">
+
+    <h1 class="page-title"><i class="fa-solid fa-box"></i> Product Inventory</h1>
+
+    <!-- Toast message box for success/error notifications -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ============ STAT CARDS (filled via /api/products/stats) ============ -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <i class="fa-solid fa-cubes stat-icon"></i>
+        <div><h3 id="statTotalProducts">0</h3><p>Total Products</p></div>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-sack-dollar stat-icon"></i>
+        <div><h3 id="statStockValue">₹0</h3><p>Total Stock Value</p></div>
+      </div>
+      <div class="stat-card stat-warning">
+        <i class="fa-solid fa-triangle-exclamation stat-icon"></i>
+        <div><h3 id="statLowStock">0</h3><p>Low Stock Alerts</p></div>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-layer-group stat-icon"></i>
+        <div><h3 id="statCategories">0</h3><p>Categories</p></div>
+      </div>
+    </section>
+
+    <!-- ============ ADD / EDIT PRODUCT FORM ============ -->
+    <section class="form-section" id="add-section">
+      <h2 class="section-heading"><i class="fa-solid fa-plus"></i> <span id="formTitle">Add New Product</span></h2>
+
+      <form id="productForm" novalidate>
+        <!-- Hidden field: stores MongoDB _id when editing. Empty when adding a new product. -->
+        <input type="hidden" id="mongoId" value="" />
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="productId">Product ID *</label>
+            <input type="text" id="productId" placeholder="e.g. PRD001" required />
+            <span class="error-text" id="err-productId"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Product Name *</label>
+            <input type="text" id="name" placeholder="e.g. Wireless Mouse" required />
+            <span class="error-text" id="err-name"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category *</label>
+            <select id="category" required>
+              <option value="">-- Select --</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Groceries">Groceries</option>
+              <option value="Books">Books</option>
+              <option value="Home & Kitchen">Home &amp; Kitchen</option>
+              <option value="Sports">Sports</option>
+            </select>
+            <span class="error-text" id="err-category"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Price (₹) *</label>
+            <input type="number" id="price" step="0.01" min="0" placeholder="e.g. 599.00" required />
+            <span class="error-text" id="err-price"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="stockQuantity">Stock Quantity *</label>
+            <input type="number" id="stockQuantity" min="0" placeholder="e.g. 120" required />
+            <span class="error-text" id="err-stockQuantity"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reorderLevel">Reorder Level *</label>
+            <input type="number" id="reorderLevel" min="0" placeholder="e.g. 20" required />
+            <span class="error-text" id="err-reorderLevel"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="supplier">Supplier *</label>
+            <input type="text" id="supplier" placeholder="e.g. TechSupply Co." required />
+            <span class="error-text" id="err-supplier"></span>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="description">Description *</label>
+            <input type="text" id="description" placeholder="Short product description" required />
+            <span class="error-text" id="err-description"></span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save Product
+          </button>
+          <button type="button" class="btn btn-secondary" id="cancelEditBtn" style="display:none;">
+            <i class="fa-solid fa-xmark"></i> Cancel Edit
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============ SEARCH / FILTER BAR ============ -->
+    <section class="search-section" id="table-section">
+      <h2 class="section-heading"><i class="fa-solid fa-magnifying-glass"></i> Search &amp; Filter</h2>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search by name, ID, or category..." />
+        <select id="filterCategory">
+          <option value="">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Groceries">Groceries</option>
+          <option value="Books">Books</option>
+          <option value="Home & Kitchen">Home &amp; Kitchen</option>
+          <option value="Sports">Sports</option>
+        </select>
+        <select id="filterStockStatus">
+          <option value="">All Stock Levels</option>
+          <option value="low">Low Stock Only</option>
+          <option value="out">Out of Stock Only</option>
+        </select>
+        <button class="btn btn-primary" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+        <button class="btn btn-secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+      </div>
+    </section>
+
+    <!-- ============ PRODUCT TABLE ============ -->
+    <section class="table-wrapper">
+      <table class="student-table">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Reorder Level</th>
+            <th>Supplier</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="productTableBody">
+          <tr><td colspan="9" class="loading-row">Loading products...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- ============ DELETE CONFIRMATION MODAL ============ -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+      <i class="fa-solid fa-triangle-exclamation modal-icon"></i>
+      <h3>Delete Product?</h3>
+      <p>This action cannot be undone. Are you sure you want to delete <strong id="deleteProductName"></strong>?</p>
+      <div class="modal-actions">
+        <button class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+        <button class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2026 InvenTrack — E-Commerce Inventory &amp; Order Management System</p>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>

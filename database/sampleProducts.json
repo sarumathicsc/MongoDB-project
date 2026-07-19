@@ -1,0 +1,12 @@
+[
+  { "productId": "PRD001", "name": "Wireless Mouse", "category": "Electronics", "price": 599.00, "stockQuantity": 120, "reorderLevel": 20, "supplier": "TechSupply Co.", "description": "Ergonomic wireless mouse with USB receiver" },
+  { "productId": "PRD002", "name": "Mechanical Keyboard", "category": "Electronics", "price": 2499.00, "stockQuantity": 45, "reorderLevel": 10, "supplier": "TechSupply Co.", "description": "RGB backlit mechanical keyboard, blue switches" },
+  { "productId": "PRD003", "name": "Cotton T-Shirt", "category": "Clothing", "price": 399.00, "stockQuantity": 200, "reorderLevel": 30, "supplier": "FashionHub Textiles", "description": "100% cotton round-neck t-shirt" },
+  { "productId": "PRD004", "name": "Denim Jeans", "category": "Clothing", "price": 1299.00, "stockQuantity": 15, "reorderLevel": 15, "supplier": "FashionHub Textiles", "description": "Slim-fit denim jeans" },
+  { "productId": "PRD005", "name": "Organic Rice (5kg)", "category": "Groceries", "price": 450.00, "stockQuantity": 8, "reorderLevel": 25, "supplier": "GreenField Foods", "description": "Premium organic basmati rice" },
+  { "productId": "PRD006", "name": "Extra Virgin Olive Oil (1L)", "category": "Groceries", "price": 899.00, "stockQuantity": 60, "reorderLevel": 15, "supplier": "GreenField Foods", "description": "Cold-pressed extra virgin olive oil" },
+  { "productId": "PRD007", "name": "Data Structures in Java", "category": "Books", "price": 649.00, "stockQuantity": 35, "reorderLevel": 10, "supplier": "Academic Press", "description": "Comprehensive textbook on data structures and algorithms" },
+  { "productId": "PRD008", "name": "MongoDB: The Definitive Guide", "category": "Books", "price": 899.00, "stockQuantity": 5, "reorderLevel": 8, "supplier": "Academic Press", "description": "In-depth guide to MongoDB for developers" },
+  { "productId": "PRD009", "name": "Non-Stick Frying Pan", "category": "Home & Kitchen", "price": 799.00, "stockQuantity": 50, "reorderLevel": 12, "supplier": "HomeEssentials Ltd", "description": "28cm non-stick frying pan with heat-resistant handle" },
+  { "productId": "PRD010", "name": "Yoga Mat", "category": "Sports", "price": 699.00, "stockQuantity": 0, "reorderLevel": 10, "supplier": "FitLife Sports", "description": "6mm anti-slip yoga mat with carry strap" }
+]

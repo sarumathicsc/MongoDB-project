@@ -1,0 +1,43 @@
+[
+  {
+    "orderId": "ORD1001",
+    "customerName": "Arjun Kumar",
+    "customerEmail": "arjun@example.com",
+    "customerPhone": "9876543210",
+    "shippingAddress": "Chennai, Tamil Nadu",
+    "items": [
+      { "productId": "PRD001", "productName": "Wireless Mouse", "quantity": 2, "unitPrice": 599.00, "subtotal": 1198.00 },
+      { "productId": "PRD002", "productName": "Mechanical Keyboard", "quantity": 1, "unitPrice": 2499.00, "subtotal": 2499.00 }
+    ],
+    "totalAmount": 3697.00,
+    "orderStatus": "Delivered",
+    "orderDate": "2026-07-01 10:15:00"
+  },
+  {
+    "orderId": "ORD1002",
+    "customerName": "Divya Sharma",
+    "customerEmail": "divya@example.com",
+    "customerPhone": "9876543211",
+    "shippingAddress": "Mumbai, Maharashtra",
+    "items": [
+      { "productId": "PRD003", "productName": "Cotton T-Shirt", "quantity": 3, "unitPrice": 399.00, "subtotal": 1197.00 },
+      { "productId": "PRD007", "productName": "Data Structures in Java", "quantity": 1, "unitPrice": 649.00, "subtotal": 649.00 }
+    ],
+    "totalAmount": 1846.00,
+    "orderStatus": "Shipped",
+    "orderDate": "2026-07-05 14:20:00"
+  },
+  {
+    "orderId": "ORD1003",
+    "customerName": "Kiran Rao",
+    "customerEmail": "kiran@example.com",
+    "customerPhone": "9876543212",
+    "shippingAddress": "Bengaluru, Karnataka",
+    "items": [
+      { "productId": "PRD006", "productName": "Extra Virgin Olive Oil (1L)", "quantity": 2, "unitPrice": 899.00, "subtotal": 1798.00 }
+    ],
+    "totalAmount": 1798.00,
+    "orderStatus": "Pending",
+    "orderDate": "2026-07-10 09:05:00"
+  }
+]
